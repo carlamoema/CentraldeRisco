@@ -83,7 +83,18 @@ def inadimp_seg(df2, categoria):
      """
      cols=[categoria, 'carteira_ativa','carteira_inadimplida_arrastada', 'ativo_problematico']
      df3=df2.loc[:,cols].groupby(categoria).sum().reset_index()
+
+     # Calcula o valor percentual
+     df3['percent_ativo_problematico'] = (df3['ativo_problematico'] / df3['carteira_ativa']) * 100
      return df3
+
+# Função para calcular o valor percentual
+
+def calculate_percent(df3):
+    """ Esta função calcula o valor percentual do Ativo_problematico em relação ao total da carteira ativa 
+    """
+    df['percent_ativo_problematico'] = (df['ativo_problematico'] / df['carteira_ativa']) * 100
+    return df3
 
 def inadimp_uf_avg(df2):
      """
@@ -211,6 +222,14 @@ with st.container():
                     color_discrete_sequence= px.colors.qualitative.G10,
                     height=800
                     )
+     for i in range(len(df3)):
+          fig.add_annotation(
+          x=df3[categoria][i],
+          y=df3['carteira_inadimplida_arrastada'][i] + df3['ativo_problematico'][i] + df3['percent_ativo_problematico'][i],
+          text=f"{df3['percent_ativo_problematico'][i]:.2f}%",
+          xshift=10,  # Ajusta a posição horizontal do rótulo
+          showarrow=False
+                            )
      st.plotly_chart(fig, use_container_width=True)
 
 with st.container(): 
