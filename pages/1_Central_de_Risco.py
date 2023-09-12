@@ -90,11 +90,18 @@ def inadimp_seg(df2, categoria):
 
 # Função para calcular o valor percentual
 
-def calculate_percent(df3):
-    """ Esta função calcula o valor percentual do Ativo_problematico em relação ao total da carteira ativa 
+def posicao_percent(fig):
+    """ Esta função posiciona o valor percentual do Ativo_problematico em relação ao total da carteira ativa 
     """
-    df['percent_ativo_problematico'] = (df['ativo_problematico'] / df['carteira_ativa']) * 100
-    return df3
+    for i in range(len(df3)):
+                   fig.add_annotation(
+                   x=df3[categoria][i],
+                   y=df3['carteira_inadimplida_arrastada'][i] + df3['ativo_problematico'][i] + df3['percent_ativo_problematico'][i],
+                   text=f"{df3['percent_ativo_problematico'][i]:.2f}%",
+                   xshift=10,  # Ajusta a posição horizontal do rótulo
+                   showarrow=False
+                                   )
+    return fig
 
 def inadimp_uf_avg(df2):
      """
@@ -151,7 +158,7 @@ image=Image.open('images/logo_man.jpg')
 st.sidebar.image(image, width=180)
 st.sidebar.markdown("## Sistema Financeiro Nacional")
 st.sidebar.markdown("##### Dados do Banco Central do Brasil")
-st.sidebar.markdown("""---""")
+
 
 #------------------------------------- Seleção do tipo de Pessoa com os botões-------------------------------#
 
@@ -224,14 +231,7 @@ with tab1:
                               color_discrete_sequence= px.colors.qualitative.G10,
                               height=800
                               )
-               for i in range(len(df3)):
-                    fig.add_annotation(
-                    x=df3[categoria][i],
-                    y=df3['carteira_inadimplida_arrastada'][i] + df3['ativo_problematico'][i] + df3['percent_ativo_problematico'][i],
-                    text=f"{df3['percent_ativo_problematico'][i]:.2f}%",
-                    xshift=10,  # Ajusta a posição horizontal do rótulo
-                    showarrow=False
-                                   )
+               fig= posicao_percent(fig)
                st.plotly_chart(fig, use_container_width=True)
 
           with st.container(): 
