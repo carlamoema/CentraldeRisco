@@ -245,6 +245,7 @@ with tab1:
                               color_discrete_sequence= px.colors.qualitative.G10,
                               height=800
                               )
+               fig= posicao_percent(fig)
                st.plotly_chart(fig, use_container_width=True)
                
           with st.container(): # Gráfico de dispersão - Inadimplência nos Estados
