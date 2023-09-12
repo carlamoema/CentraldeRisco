@@ -193,9 +193,6 @@ match selected_month:
 tab1, tab2 = st.tabs(["Brasil", "Estados"])
 
 with tab1:
-          st.header("Brasil")
-          st.markdown("BRASIL", width=200)
-
           with st.container(): 
                [menor_ind, menor_uf, maior_ind, maior_uf, media_ind]=inadimp_uf(df2)
                col1, col2, col3 = st.columns(spec=3, gap='medium')
@@ -308,6 +305,5 @@ with tab1:
                st.plotly_chart(fig, use_container_width=True) 
 
 with tab2:
-
      st.header("Estados")
-     st.markdown("Estados", width=200)
+     st.markdown("Estados")
