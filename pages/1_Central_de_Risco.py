@@ -5,7 +5,9 @@ import glob as gl
 import datetime as dt 
 import plotly.express as px
 import matplotlib as mat
+import locale
 from PIL import Image
+
 
 st.set_page_config(page_title='Home', page_icon='📈', layout='wide')
 
@@ -232,6 +234,14 @@ with tab1:
                               height=800
                               )
                fig= posicao_percent(fig)
+               fig.update_layout({
+                                   'yaxis': {
+                                        'tickformat': 'R$,.2f',  # Formato da moeda brasileira
+                                        'ticksuffix': 'M',  # Adiciona "M" para milhões
+                                        'showticksuffix': 'last'  # Mostra o sufixo apenas no último rótulo do eixo Y
+                                   }
+                                 })
+               
                st.plotly_chart(fig, use_container_width=True)
 
           with st.container(): 
@@ -258,8 +268,7 @@ with tab1:
                          labels={'Inadimplencia_media': 'Inadimplência Média', 'uf':'UF'}, 
                          color_discrete_sequence= px.colors.qualitative.T10)
                st.plotly_chart(fig, use_container_width=True)
-               
-                    
+                  
           with st.container(): # Gráfico de Linhas - Comparando inadimplência em RJ/SP/GO
                ufs="uf==['RJ','SP','GO']"
                df3=inadimp_uf_time(df1, ufs)
