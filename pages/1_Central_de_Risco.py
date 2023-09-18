@@ -177,7 +177,7 @@ df1 = df.query(f'cliente=="{tipo}"')
 
 meses=['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho']
 selected_month = st.sidebar.selectbox('Selecione um mês: ', meses)
-st.markdown("""---""")
+
 
      
 match selected_month:
