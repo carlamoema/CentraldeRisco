@@ -316,3 +316,9 @@ with tab1:
 with tab2:
      st.header("Estados")
      st.markdown("Estados")
+     
+     st.button("Reset", type="primary")
+     if st.button('Say hello'):
+          st.write('Why hello there')
+     else:
+          st.write('Goodbye')
