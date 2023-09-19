@@ -5,7 +5,6 @@ import glob as gl
 import datetime as dt 
 import plotly.express as px
 import matplotlib as mat
-import locale
 from PIL import Image
 
 
