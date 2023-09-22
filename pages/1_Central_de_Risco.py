@@ -5,8 +5,10 @@ import glob as gl
 import datetime as dt 
 import plotly.express as px
 import matplotlib as mat
+import locale
 from PIL import Image
 
+locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
 st.set_page_config(page_title='Home', page_icon='📈', layout='wide')
 
@@ -106,7 +108,7 @@ def posicao_percent(fig):
 
 def inadimp_uf_avg(df2):
      """
-     Esta função calcula a média da carteiras inadimplida por uf.
+     #Esta função calcula a média da carteiras inadimplida por uf.
      """
      cols=['uf','carteira_inadimplida_arrastada']
      df3= df2.loc[:,cols].groupby('uf').mean().reset_index()
@@ -177,7 +179,6 @@ df1 = df.query(f'cliente=="{tipo}"')
 meses=['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho']
 selected_month = st.sidebar.selectbox('Selecione um mês: ', meses)
 
-
      
 match selected_month:
      case 'Janeiro':
@@ -198,7 +199,7 @@ match selected_month:
       
 #------------------------------------------  Estrutura com Containers -----------------------------------------#
 #------------------------------------------  Cartões com Indicadores ------------------------------------------#
-tab1, tab2 = st.tabs(["Brasil", "Estados"])
+tab1, tab2 = st.tabs(["Brasil", "-"])
 
 with tab1:
           with st.container(): 
@@ -220,27 +221,19 @@ with tab1:
                
           #--------------------------------------------------------------------------------------------------------------#       
           #----------------------------------------------  Gráficos -----------------------------------------------------#
-
           with st.container(): 
                ## Gráfico de Barras Verticais - Y = Inadimplência X = Modalidades
                categoria= 'modalidade'
                df3= inadimp_seg(df2, categoria)
                fig=px.bar(df3, x=categoria, 
-                              y=['carteira_ativa','ativo_problematico', 'carteira_inadimplida_arrastada'], 
+                              y=['carteira_ativa','ativo_problematico', 'carteira_inadimplida_arrastada'],
                               barmode='group',
                               title='Carteira de Crédito segmentada em Modalidades',                      
                               color_discrete_sequence= px.colors.qualitative.G10,
                               height=800
                               )
-               fig= posicao_percent(fig)
-               fig.update_layout({
-                                   'yaxis': {
-                                        'tickformat': 'R$,.2f',  # Formato da moeda brasileira
-                                        'ticksuffix': 'M',  # Adiciona "M" para milhões
-                                        'showticksuffix': 'last'  # Mostra o sufixo apenas no último rótulo do eixo Y
-                                   }
-                                 })
-               
+               fig= posicao_percent(fig)                             
+               fig.update_layout(yaxis_title="R$")
                st.plotly_chart(fig, use_container_width=True)
 
           with st.container(): 
@@ -255,6 +248,7 @@ with tab1:
                               height=800
                               )
                fig= posicao_percent(fig)
+               fig.update_layout(yaxis_title="R$")
                st.plotly_chart(fig, use_container_width=True)
                
           with st.container(): # Gráfico de dispersão - Inadimplência nos Estados
@@ -267,6 +261,7 @@ with tab1:
                          labels={'Inadimplencia_media': 'Inadimplência Média', 'uf':'UF'}, 
                          color_discrete_sequence= px.colors.qualitative.T10)
                st.plotly_chart(fig, use_container_width=True)
+               
                   
           with st.container(): # Gráfico de Linhas - Comparando inadimplência em RJ/SP/GO
                ufs="uf==['RJ','SP','GO']"
@@ -314,8 +309,8 @@ with tab1:
                st.plotly_chart(fig, use_container_width=True) 
 
 with tab2:
-     st.header("Estados")
-     st.markdown("Estados")
+     st.header("-")
+     st.markdown("-")
      
      st.button("Reset", type="primary")
      if st.button('Say hello'):

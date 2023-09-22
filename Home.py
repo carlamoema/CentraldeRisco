@@ -26,6 +26,9 @@ O Dashboard foi construído para mostrar o panorama do Mercado de Crédito dentr
     - Março
     - Abril
     - Maio
+    - Junho
+    - Julho
+    - Agosto         
 """      
 )
 
@@ -35,14 +38,19 @@ st.markdown ("""
     (fonte https://www.bcb.gov.br/content/estabilidadefinanceira/scr/scr.data/scr_data_metodologia.pdf)   
 
 ### 1 - Inadimplência:
-Calcula-se pela divisão do valor da carteira das operações de crédito com alguma parcela em atraso acima de 90 dias pelo valor da carteira de todas as operações.     
+Calcula-se pela divisão do valor da carteira das operações de crédito com alguma parcela em atraso acima de 90 dias pelo valor da carteira de todas as operações.
+Inadimplência=Carteira_inadimplida_arrastada/carteira_ativa
 
 ### 2 - Ativo problemático:
-Calcula-se pela divisão do valor da carteira das operações de crédito consideradas como Ativos Problemáticos pelo
-valor da carteira de todas as operações. 
-São consideradas como ativos problemáticos as operações de crédito em atraso há mais de noventa dias e as
-operações nas quais existem indícios de que respectiva obrigação não será integralmente honrada. Entende-se que
-há indicativos de que a obrigação poderá não ser integralmente honrada, entre outros eventos, quando a operação for objeto de reestruturação e a instituição financeira reconhecer contabilmente deterioração significativa da qualidade do crédito do tomador, classificando-o entre os níveis de risco E e H.        
+Calcula-se pela divisão do valor da carteira das operações de crédito consideradas como Ativos Problemáticos pelo valor da carteira de todas as operações. 
+São consideradas como ativos problemáticos as operações de crédito em atraso há mais de noventa dias e as operações nas quais existem indícios de que respectiva 
+obrigação não será integralmente honrada.
+Ativo_Problemático=Ativo_Problematico/Carteira_ativa
+             
+### 3 - Inadimplência Média: 
+Calcula a Carteira Inadimplida Arrastada Média (de todos os clientes) divide pela Carteira Ativa Média (de todos os clientes), o resultado é mostrado
+em valores %.             
+
 
 #### São registrados no SCR:
 - empréstimos e financiamentos;

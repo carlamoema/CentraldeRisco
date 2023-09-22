@@ -1,16 +1,27 @@
+OK - Corrigir Valores nos gráficos da Aba Brasil - OK, BILHÕES
+OK - Criar texto explicando cálculo da Inadimplencia Média, MAX e MIN. - 
+0 - Calcular no cartões o indicador de inadimplência média 
+        - Estado de Menor inadimplencia média
+        - Estado de maior inadimplência média
+        - Desvio Padrão desses valores.
+0 - Salvar em outra nuvem e disponibilizar
+0 - Incluir Base de Agosto
+0 - Ajustar no 3º gráfico os valores da Inadimplência, 
+    Calcular a média da carteira_inadimplida_arrastada por cliente
+    Calcular a média da carteira_ativa por cliente
+    Dividir uma pela outra para encontrar o índice de Inadimplencia
+    Verificar no 4º gráfico se o valor está correto.
+
 1- Criar uma Aba com informações individualizadas em que o 1o filtro é o Estado, mas mantém os filtros da SIDEBAR. PJ/PF/ MESES DO ANO
-2 - Incluir % nos demais gráficos como o primeiro gráfice de Modalidades
+2 - Incluir % nos demais gráficos como o primeiro gráficO de Modalidades
 
+fig.update_layout({
+                                   'yaxis': {
+                                        'tickformat': 'R$,.2f',  # Formato da moeda brasileira
+                                        'ticksuffix': 'M',  # Adiciona "M" para milhões
+                                        'showticksuffix': 'last'  # Mostra o sufixo apenas no último rótulo do eixo Y
+                                   }
+                                 }
 
-for i in range(len(df3)):
-                    fig.add_annotation(
-                    x=df3[categoria][i],
-                    y=df3['carteira_inadimplida_arrastada'][i] + df3['ativo_problematico'][i] + df3['percent_ativo_problematico'][i],
-                    text=f"{df3['percent_ativo_problematico'][i]:.2f}%",
-                    xshift=10,  # Ajusta a posição horizontal do rótulo
-                    showarrow=False
-                                   )
-               
-
-
-st.sidebar.markdown("""---""")
+Entende-se que há indicativos de que a obrigação poderá não ser integralmente honrada, entre outros eventos, quando a 
+operação for objeto de reestruturação e a instituição financeira reconhecer contabilmente deterioração significativa da qualidade do crédito do tomador, classificando-o entre os níveis de risco E e H. 
