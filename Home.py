@@ -1,3 +1,12 @@
+# pip install streamlit
+# pip install pandas 
+# pip install  glob 
+# pip install  datetime 
+# pip install  plotly.express 
+# pip install  matplotlib 
+# pip install  locale
+# pip install  PIL 
+
 import streamlit as st 
 from PIL import Image
 
