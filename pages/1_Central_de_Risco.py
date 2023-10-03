@@ -7,6 +7,7 @@ import plotly.express as px
 import matplotlib as mat
 import locale
 from PIL import Image
+import gdown
 
 locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
@@ -140,7 +141,8 @@ def inadimp_uf_ocup(df1, uf):
 #-------------------------------------------------------------------------------------------------------------#
 
 #-------------------------Lendo o dataset --------------------------------------------------------------------#
-pathfile= 'dataset/*.csv'
+pathfile= "https://drive.google.com/drive/folders/1vWC08e3ng0b_pEVZgACErP4A4NKAJckN?usp=drive_link"
+'dataset/*.csv'
 df = read_code(pathfile)
 #------------------------- Limpando os dados -----------------------------------------------------------------#
 df= clean_code(df)
