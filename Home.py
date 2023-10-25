@@ -26,6 +26,9 @@ O Dashboard foi construído para mostrar o panorama do Mercado de Crédito dentr
     - Março
     - Abril
     - Maio
+    - Junho
+    - Julho
+    - Agosto
 """      
 )
 
