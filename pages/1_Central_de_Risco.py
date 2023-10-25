@@ -155,7 +155,7 @@ else:
 
 df1 = df.query(f'cliente=="{tipo}"')
 
-meses=['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio']
+meses=['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto']
 selected_month = st.sidebar.selectbox('Selecione um mês: ', meses)
 st.markdown("""---""")
 
@@ -171,6 +171,12 @@ match selected_month:
           df2=df1.query('data_base=="2023-04-30"')
      case 'Maio':
           df2=df1.query('data_base=="2023-05-31"')
+     case 'Junho':
+          df2=df1.query('data_base=="2023-06-30"')
+     case 'Julho':
+          df2=df1.query('data_base=="2023-07-31"')
+     case 'Agosto':
+          df2=df1.query('data_base=="2023-08-31"')     
              
       
 #------------------------------------------  Estrutura com Containers -----------------------------------------#
