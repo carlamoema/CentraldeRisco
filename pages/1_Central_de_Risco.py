@@ -146,7 +146,7 @@ st.sidebar.markdown("""---""")
 
 selecao = st.sidebar.radio(
     "Escolha o Tipo:",
-    ('Pessoa Física', 'Pessoa Jurídica'))
+    ('Pessoa Jurídica', 'Pessoa Física' ))
 
 if selecao == 'Pessoa Jurídica':
     tipo='PJ'
