@@ -179,108 +179,129 @@ match selected_month:
           df2=df1.query('data_base=="2023-08-31"')     
              
       
+#------------------------------------------  Estrutura com Abas -----------------------------------------------#
+tab1, tab2= st.tabs(['Goiás', 'Brasil'])
+
+with tab1: # Goiás
+     st.markdown('Gráficos de Goiás')
+     """ 
+          Colocar 4 indicadores de Inadimplência
+          1 - Modalidade de Maior Inadimplência Média e Valor 
+          2 - Modalidade de Menor Inadimplência Média e Valor
+          3 - Setor de Maior Inadimplência Média e Valor 
+          4 - Modalidade de Menor Inadimplência Média e Valor
+     """    
+     
+     
+     
+     
 #------------------------------------------  Estrutura com Containers -----------------------------------------#
 #------------------------------------------  Cartões com Indicadores ------------------------------------------#
-
-with st.container(): 
-     [menor_ind, menor_uf, maior_ind, maior_uf, media_ind]=inadimp_uf(df2)
-     col1, col2, col3 = st.columns(spec=3, gap='medium')
-     with col1: ## Cartão com Uf Menor Inadimplência Relativa e valor
-          col1.markdown('Menor inadimplência %')
-          col1.metric(label = menor_uf, value=round(menor_ind,2))
+     
+with tab2: # Brasil
+#------------------------------------------  Estrutura com Containers -----------------------------------------#
+#------------------------------------------  Cartões com Indicadores ------------------------------------------#
+     with st.container(): 
+          [menor_ind, menor_uf, maior_ind, maior_uf, media_ind]=inadimp_uf(df2)
+          col1, col2, col3 = st.columns(spec=3, gap='medium')
+          with col1: ## Cartão com Uf Menor Inadimplência Relativa e valor
+               col1.markdown('Menor inadimplência %')
+               col1.metric(label = menor_uf, value=round(menor_ind,2))
+               
+          with col2: ## Cartão com Uf Maior Inadimplência Relativa e valor
+               col2.markdown('Maior inadimplência %')
+               col2.metric(label = maior_uf, value=round(maior_ind,2))
+                                   
+          with col3: ## Cartão com Inadimplência Média Relativa por Cliente
+               col3.markdown('Inadimplência Média')
+               col3.metric(label = "%", value=round(media_ind,2))
+     
+          st.markdown("""---""")  
           
-     with col2: ## Cartão com Uf Maior Inadimplência Relativa e valor
-          col2.markdown('Maior inadimplência %')
-          col2.metric(label = maior_uf, value=round(maior_ind,2))
-                              
-     with col3: ## Cartão com Inadimplência Média Relativa por Cliente
-          col3.markdown('Inadimplência Média')
-          col3.metric(label = "%", value=round(media_ind,2))
-   
-     st.markdown("""---""")  
-     
-#--------------------------------------------------------------------------------------------------------------#       
-#----------------------------------------------  Gráficos -----------------------------------------------------#
+     #--------------------------------------------------------------------------------------------------------------#       
+     #----------------------------------------------  Gráficos -----------------------------------------------------#
 
-with st.container(): 
-     ## Gráfico de Barras Verticais - Y = Inadimplência X = Modalidades
-     categoria= 'modalidade'
-     df3= inadimp_seg(df2, categoria)
-     fig=px.bar(df3, x=categoria, 
-                    y=['carteira_ativa','ativo_problematico', 'carteira_inadimplida_arrastada'], 
-                    barmode='group',
-                    title='Carteira de Crédito segmentada em Modalidades',                      
-                    color_discrete_sequence= px.colors.qualitative.G10,
-                    height=800
-                    )
-     st.plotly_chart(fig, use_container_width=True)
+     with st.container(): 
+          ## Gráfico de Barras Verticais - Y = Inadimplência X = Modalidades
+          categoria= 'modalidade'
+          df3= inadimp_seg(df2, categoria)
+          fig=px.bar(df3, x=categoria, 
+                         y=['carteira_ativa','ativo_problematico', 'carteira_inadimplida_arrastada'], 
+                         barmode='group',
+                         title='Carteira de Crédito segmentada em Modalidades',                      
+                         color_discrete_sequence= px.colors.qualitative.G10,
+                         height=800
+                         )
+          st.plotly_chart(fig, use_container_width=True)
 
-with st.container(): 
-     ## Gráfico de Barras Verticais - Y = Inadimplência X = Ocupação
-     categoria= 'ocupacao'
-     df3 = inadimp_seg(df2, categoria)
-     fig=px.bar(df3, x=categoria, 
-                    y=['carteira_ativa','ativo_problematico', 'carteira_inadimplida_arrastada'], 
-                    barmode='group',
-                    title='Carteira de Crédito por Ocupação',                      
-                    color_discrete_sequence= px.colors.qualitative.G10,
-                    height=800
-                    )
-     st.plotly_chart(fig, use_container_width=True)
-     
-with st.container(): # Gráfico de dispersão - Inadimplência nos Estados
-     df3=inadimp_uf_avg(df2)
-     fig = px.scatter(df3,
-               x='uf',
-               y='Inadimplencia_media',
-               hover_name='uf',
-               title= 'Carteira Inadimplida média por UF',
-               labels={'Inadimplencia_media': 'Inadimplência Média', 'uf':'UF'}, 
-               color_discrete_sequence= px.colors.qualitative.T10)
-     st.plotly_chart(fig, use_container_width=True)
-         
+     with st.container(): 
+          ## Gráfico de Barras Verticais - Y = Inadimplência X = Ocupação
+          categoria= 'ocupacao'
+          df3 = inadimp_seg(df2, categoria)
+          fig=px.bar(df3, x=categoria, 
+                         y=['carteira_ativa','ativo_problematico', 'carteira_inadimplida_arrastada'], 
+                         barmode='group',
+                         title='Carteira de Crédito por Ocupação',                      
+                         color_discrete_sequence= px.colors.qualitative.G10,
+                         height=800
+                         )
+          st.plotly_chart(fig, use_container_width=True)
           
-with st.container(): # Gráfico de Linhas - Comparando inadimplência em RJ/SP/GO
-     ufs="uf==['RJ','SP','GO']"
-     df3=inadimp_uf_time(df1, ufs)
-     fig =px.line(df3,
-                    x='mes',
-                    y='Inadimplência %',
-                    color='uf', 
-                    title='Comparativo da Inadimplência nos Estados',
-                    color_discrete_sequence= px.colors.qualitative.T10
-                    )
-     st.plotly_chart(fig, use_container_width=True)
+     with st.container(): # Gráfico de dispersão - Inadimplência nos Estados
+          df3=inadimp_uf_avg(df2)
+          fig = px.scatter(df3,
+                    x='uf',
+                    y='Inadimplencia_media',
+                    hover_name='uf',
+                    title= 'Carteira Inadimplida média por UF',
+                    labels={'Inadimplencia_media': 'Inadimplência Média', 'uf':'UF'}, 
+                    color_discrete_sequence= px.colors.qualitative.T10)
+          st.plotly_chart(fig, use_container_width=True)
+          
+               
+     with st.container(): # Gráfico de Linhas - Comparando inadimplência em RJ/SP/GO
+          ufs="uf==['RJ','SP','GO']"
+          df3=inadimp_uf_time(df1, ufs)
+          fig =px.line(df3,
+                         x='mes',
+                         y='Inadimplência %',
+                         color='uf', 
+                         title='Comparativo da Inadimplência nos Estados',
+                         color_discrete_sequence= px.colors.qualitative.T10
+                         )
+          st.plotly_chart(fig, use_container_width=True)
+          
+     with st.container(): # Gráfico de Linhas - Evolução da inadimplência por ocupação em GO
+          uf="uf=='GO'"
+          df3=inadimp_uf_ocup(df1, uf)
+          fig=px.line(df3,
+               x='mes',
+               y='Inadimplência %',
+               color='ocupacao', 
+               title='Inadimplência por Ocupação no estado de GO'
+               )
+          st.plotly_chart(fig, use_container_width=True) 
      
-with st.container(): # Gráfico de Linhas - Evolução da inadimplência por ocupação em GO
-     uf="uf=='GO'"
-     df3=inadimp_uf_ocup(df1, uf)
-     fig=px.line(df3,
-          x='mes',
-          y='Inadimplência %',
-          color='ocupacao', 
-          title='Inadimplência por Ocupação no estado de GO'
-          )
-     st.plotly_chart(fig, use_container_width=True) 
-  
-with st.container(): 
-     uf="uf=='RJ'"
-     df3=inadimp_uf_ocup(df1, uf)
-     fig=px.line(df3,
-          x='mes',
-          y='Inadimplência %',
-          color='ocupacao', 
-          title='Inadimplência por Ocupação no estado de RJ'
-          )
-     st.plotly_chart(fig, use_container_width=True) 
-     
-with st.container(): 
-     uf="uf=='SP'"
-     df3=inadimp_uf_ocup(df1, uf)
-     fig=px.line(df3,
-          x='mes',
-          y='Inadimplência %',
-          color='ocupacao', 
-          title='Inadimplência por Ocupação no estado de SP'
-          )
-     st.plotly_chart(fig, use_container_width=True) 
+     with st.container(): 
+          uf="uf=='RJ'"
+          df3=inadimp_uf_ocup(df1, uf)
+          fig=px.line(df3,
+               x='mes',
+               y='Inadimplência %',
+               color='ocupacao', 
+               title='Inadimplência por Ocupação no estado de RJ'
+               )
+          st.plotly_chart(fig, use_container_width=True) 
+          
+     with st.container(): 
+          uf="uf=='SP'"
+          df3=inadimp_uf_ocup(df1, uf)
+          fig=px.line(df3,
+               x='mes',
+               y='Inadimplência %',
+               color='ocupacao', 
+               title='Inadimplência por Ocupação no estado de SP'
+               )
+          st.plotly_chart(fig, use_container_width=True) 
+
+
