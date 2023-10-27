@@ -183,18 +183,15 @@ match selected_month:
 tab1, tab2= st.tabs(['Goiás', 'Brasil'])
 
 with tab1: # Goiás
-     st.markdown('Gráficos de Goiás')
-     """ 
-          Colocar 4 indicadores de Inadimplência
-          1 - Modalidade de Maior Inadimplência Média e Valor 
-          2 - Modalidade de Menor Inadimplência Média e Valor
-          3 - Setor de Maior Inadimplência Média e Valor 
-          4 - Modalidade de Menor Inadimplência Média e Valor
-     """    
-     
-     
-     
-     
+     df2= df2.query('uf=="GO"')
+     st.dataframe(df2.sample(10))
+     with st.container(): 
+          cols=['carteira_ativa','carteira_inadimplida_arrastada']
+          sum_cart_ativa= df2['carteira_ativa'].sum()
+          sum_cart_indimp=df2['carteira_inadimplida_arrastada'].sum()
+          Inadimp=(sum_cart_indimp/sum_cart_ativa)*100
+          st.metric(label = "Inadimplência", value=round(Inadimp,2))
+          
 #------------------------------------------  Estrutura com Containers -----------------------------------------#
 #------------------------------------------  Cartões com Indicadores ------------------------------------------#
      

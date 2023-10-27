@@ -1,6 +1,50 @@
 1 - Incluir aba Goiás
-1.1 - Criar gráficos voltados para essa Seleção
+1.1 - Criar gráficos voltados para essa Seleção (seguir modelo io_draw)
+
+
+def avg_std_time_on_traffic(df1)     :
+    df_aux = (df1.loc[:,['City', 'Time_taken(min)', 'Road_traffic_density']]
+                .groupby(['City', 'Road_traffic_density'])
+                .agg( {'Time_taken(min)': ['mean', 'std']}))
+    df_aux.columns = ['avg_time', 'std_time']
+    df_aux = df_aux.reset_index()
+    
+    fig = px.sunburst(df_aux, path = ['City', 'Road_traffic_density'], values='avg_time', color='std_time', color_continuous_scale='RdBu',
+                    color_continuous_midpoint=np.average(df_aux['std_time']))
+    return fig
+
+
+
+with st.container(): #Gráfico de sunburst: Tempo de entrega por Cidade / Tipo de tráfego         
+         st.markdown('##### Tempo Médio por Cidade por Tipo de Tráfego')
+         fig = avg_std_time_on_traffic(df1)
+         st.plotly_chart(fig, use_container_width=True) 
+
+
+
+#------ Esta função calcula a quantidade de entregas realizadas por cidade e tipo de tráfego e gera um gráfico de bolhas --------#
+def pedidos_cidade_trafego(df1):
+    df2=df1.loc[:,['ID', 'City', 'Road_traffic_density']].groupby(['City','Road_traffic_density']).count().reset_index()
+    fig=px.scatter(df2, x='City', y='Road_traffic_density', size='ID', labels='ID' )
+    return fig     
+
+  with col2: ## Gráfico de Bolhas - Volume de pedidos por Cidade e por tipo de tráfego
+              col2.markdown("##### Pedidos por cidade e tipo de tráfego")
+              fig = pedidos_cidade_trafego(df1)
+              st.plotly_chart(fig, use_container_width=True)
+
+
+
+
+
+
+
+
 
 
 2 - Publicar em alguma nuvem.
+
+
+
+
 
