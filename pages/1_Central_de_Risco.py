@@ -1,4 +1,4 @@
-#pip install babel
+
 # Importando as bibliotecas que serão utilizadas
 import streamlit as st
 import pandas as pd
@@ -7,6 +7,7 @@ import datetime as dt
 import plotly.express as px
 import matplotlib as mat
 from PIL import Image
+
 
 
 st.set_page_config(page_title='Home', page_icon='📈', layout='wide')
@@ -118,11 +119,21 @@ def inadimp_uf_ocup(df1, uf):
      df3['mes'] = df3['data_base'].dt.month_name() #Criando uma coluna com o nome do mês do campo data_base
      return df3
 
-def formatar_numero_localizacao(numero, localizacao='pt_BR'):
-     """ 
-     Esta função formata o número de acordo com a localização, foi usada para melhorar a visualização de números muito grandes (Bilhões)"""
-     locale = Locale.parse(localizacao)
-     return format_number(numero, locale=locale)
+def formatar_numero(numero):
+    sufixos = {
+        0: '',
+        3: 'K',  # Milhares
+        6: 'Mi',  # Milhões
+        9: 'Bi',  # Bilhões
+        12: 'Tri',  # Trilhões
+        15: 'Qua',  # Quadrilhões, e assim por diante
+    }
+    magnitude = 0
+    while abs(numero) >= 1000:
+        magnitude += 3
+        numero /= 1000.0
+    return f'{round(numero, 2)} {sufixos[magnitude]}'
+
 #-------------------------------------------------------------------------------------------------------------#
 
 #-------------------------Lendo o dataset --------------------------------------------------------------------#
@@ -194,15 +205,32 @@ with tab1: # Goiás
      with st.container():
           col1, col2, col3, col4, col5 = st.columns(spec=5, gap='medium')
           with col1:
+               #Calculando o indice de inadimplência do estado
                cols=['carteira_ativa','carteira_inadimplida_arrastada']
                sum_cart_ativa= df3['carteira_ativa'].sum()
                sum_cart_indimp=df3['carteira_inadimplida_arrastada'].sum()
                Inadimp=(sum_cart_indimp/sum_cart_ativa)*100
                col1.metric(label = "Índice Inadimplência %", value=round(Inadimp,2))
-          
+               #---------------------------------------------------        
           with col2:
-               valor_formatado_string = formatar_numero_localizacao(sum_cart_ativa)
-               col2.metric(label='Valor da Carteira', value=round(valor_formatado_string,0))
+               #Calculando o valor absoluto da carteira
+               valor_formatado_string = formatar_numero(sum_cart_ativa)
+               col2.metric(label='Valor da Carteira R$', value=(valor_formatado_string))
+               #---------------------------------------------------   
+          with col3:
+               #Calculando a carteira média por cliente
+               cols=['carteira_ativa', 'carteira_inadimplida_arrastada']
+               avg_carteira=df3['carteira_ativa'].mean()
+               valor_formatado_string = formatar_numero(avg_carteira)
+               col3.metric(label='Carteira Média R$', value=valor_formatado_string)
+               #---------------------------------------------------   
+          with col4:
+               #Calculando a Inadimplência média por cliente
+               cols=['carteira_ativa', 'carteira_inadimplida_arrastada']
+               
+               col4.metric(label='Inadimplência Média', value=valor_formatado_string*100)
+               #---------------------------------------------------   
+               
                
 #------------------------------------------  Estrutura com Containers -----------------------------------------#
 #------------------------------------------  Cartões com Indicadores ------------------------------------------#

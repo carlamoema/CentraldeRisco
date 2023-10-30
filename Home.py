@@ -1,4 +1,4 @@
-#pip install babel
+
 import streamlit as st 
 from PIL import Image
 
