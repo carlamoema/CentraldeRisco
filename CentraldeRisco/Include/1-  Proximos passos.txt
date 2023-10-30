@@ -13,13 +13,10 @@ def avg_std_time_on_traffic(df1)     :
                     color_continuous_midpoint=np.average(df_aux['std_time']))
     return fig
 
-
-
 with st.container(): #Gráfico de sunburst: Tempo de entrega por Cidade / Tipo de tráfego         
          st.markdown('##### Tempo Médio por Cidade por Tipo de Tráfego')
          fig = avg_std_time_on_traffic(df1)
          st.plotly_chart(fig, use_container_width=True) 
-
 
 
 #------ Esta função calcula a quantidade de entregas realizadas por cidade e tipo de tráfego e gera um gráfico de bolhas --------#

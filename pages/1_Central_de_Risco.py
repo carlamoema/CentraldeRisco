@@ -1,3 +1,4 @@
+#pip install babel
 # Importando as bibliotecas que serão utilizadas
 import streamlit as st
 import pandas as pd
@@ -6,6 +7,7 @@ import datetime as dt
 import plotly.express as px
 import matplotlib as mat
 from PIL import Image
+
 
 st.set_page_config(page_title='Home', page_icon='📈', layout='wide')
 
@@ -116,6 +118,11 @@ def inadimp_uf_ocup(df1, uf):
      df3['mes'] = df3['data_base'].dt.month_name() #Criando uma coluna com o nome do mês do campo data_base
      return df3
 
+def formatar_numero_localizacao(numero, localizacao='pt_BR'):
+     """ 
+     Esta função formata o número de acordo com a localização, foi usada para melhorar a visualização de números muito grandes (Bilhões)"""
+     locale = Locale.parse(localizacao)
+     return format_number(numero, locale=locale)
 #-------------------------------------------------------------------------------------------------------------#
 
 #-------------------------Lendo o dataset --------------------------------------------------------------------#
@@ -183,15 +190,20 @@ match selected_month:
 tab1, tab2= st.tabs(['Goiás', 'Brasil'])
 
 with tab1: # Goiás
-     df2= df2.query('uf=="GO"')
-     st.dataframe(df2.sample(10))
-     with st.container(): 
-          cols=['carteira_ativa','carteira_inadimplida_arrastada']
-          sum_cart_ativa= df2['carteira_ativa'].sum()
-          sum_cart_indimp=df2['carteira_inadimplida_arrastada'].sum()
-          Inadimp=(sum_cart_indimp/sum_cart_ativa)*100
-          st.metric(label = "Inadimplência", value=round(Inadimp,2))
+     df3= df2.query('uf=="GO"')
+     with st.container():
+          col1, col2, col3, col4, col5 = st.columns(spec=5, gap='medium')
+          with col1:
+               cols=['carteira_ativa','carteira_inadimplida_arrastada']
+               sum_cart_ativa= df3['carteira_ativa'].sum()
+               sum_cart_indimp=df3['carteira_inadimplida_arrastada'].sum()
+               Inadimp=(sum_cart_indimp/sum_cart_ativa)*100
+               col1.metric(label = "Índice Inadimplência %", value=round(Inadimp,2))
           
+          with col2:
+               valor_formatado_string = formatar_numero_localizacao(sum_cart_ativa)
+               col2.metric(label='Valor da Carteira', value=round(valor_formatado_string,0))
+               
 #------------------------------------------  Estrutura com Containers -----------------------------------------#
 #------------------------------------------  Cartões com Indicadores ------------------------------------------#
      
