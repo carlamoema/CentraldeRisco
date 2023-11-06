@@ -29,7 +29,7 @@ def read_code(pathfile):
                                     thousands='.', 
                                     decimal=',', 
                                     usecols=['data_base', 'uf', 
-                                             'carteira_ativa', 'ativo_problematico', 
+                                             'carteira_ativa', 'ativo_problematico', 'numero_de_operacoes',
                                              'carteira_inadimplida_arrastada', 'cliente', 
                                              'modalidade', 'porte', 'ocupacao', 'cnae_secao'])
           dfs.append(df)
@@ -60,6 +60,7 @@ def change_code(df):
      df['data_base'] = pd.to_datetime(df['data_base']) 
      df['carteira_inadimplida_arrastada'].astype(float, copy=False)
      df.loc[df['cliente']=='PJ', 'ocupacao']= df['cnae_secao']
+     df.
      return df
 
 def inadimp_uf(df2):
@@ -216,20 +217,23 @@ with tab1: # Goiás
                #Calculando o valor absoluto da carteira
                valor_formatado_string = formatar_numero(sum_cart_ativa)
                col2.metric(label='Valor da Carteira R$', value=(valor_formatado_string))
-               #---------------------------------------------------   
+               #---------------------------------------------------------   
           with col3:
-               #Calculando a carteira média por cliente
+               #Calculando a quantidade de operações
                cols=['carteira_ativa', 'carteira_inadimplida_arrastada']
                avg_carteira=df3['carteira_ativa'].mean()
                valor_formatado_string = formatar_numero(avg_carteira)
-               col3.metric(label='Carteira Média R$', value=valor_formatado_string)
-               #---------------------------------------------------   
+               col3.metric(label='Endividamento médio por cliente R$', value=valor_formatado_string)
+               #------------------------------------------------------------  
+               
           with col4:
                #Calculando a Inadimplência média por cliente
                cols=['carteira_ativa', 'carteira_inadimplida_arrastada']
-               
+               avg_cliente=  df3.loc[:, cols].groupby(df3.index()).mean()
                col4.metric(label='Inadimplência Média', value=valor_formatado_string*100)
-               #---------------------------------------------------   
+               #------------------------------------------------------------
+               
+                  
                
                
 #------------------------------------------  Estrutura com Containers -----------------------------------------#
@@ -339,6 +343,4 @@ with tab2: # Brasil
                color='ocupacao', 
                title='Inadimplência por Ocupação no estado de SP'
                )
-          st.plotly_chart(fig, use_container_width=True) 
-
-
+          st.plotly_chart(fig, use_container_width=True)
