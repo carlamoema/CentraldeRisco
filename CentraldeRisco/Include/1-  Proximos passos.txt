@@ -1,6 +1,7 @@
-1 - Incluir aba Goiás
-1.1 - Criar gráficos voltados para essa Seleção (seguir modelo io_draw)
-
+OK 1 - Incluir aba Goiás
+   1.1 - Criar gráficos voltados para essa Seleção (seguir modelo io_draw)
+OK - 1.2 - Criado ambiente virtual VCentraldeRisco para o projeto (dentro do diretório Centralderisco)
+1.3 - Prever probabilidades de inadimplencia do Agro de acordo com algoritmo de classificação ou regressão
 
 def avg_std_time_on_traffic(df1)     :
     df_aux = (df1.loc[:,['City', 'Time_taken(min)', 'Road_traffic_density']]

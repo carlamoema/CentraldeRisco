@@ -1,3 +1,9 @@
+# pip install plotly
+# pip install streamlit
+# pip install matplotlib
+
+
+
 
 # Importando as bibliotecas que serão utilizadas
 import streamlit as st
@@ -6,6 +12,7 @@ import glob as gl
 import datetime as dt 
 import plotly.express as px
 import matplotlib as mat
+from random import randint
 from PIL import Image
 
 
@@ -55,12 +62,15 @@ def change_code(df):
      Esta função ajusta os tipo de dados de acordo com a informação contida nele
      1 - Alterando a coluna data-base para tipo datetime         
      2 - Ajustando as colunas 'ativo_problematico' e 'carteira_inadimplida_arrastada' para tipo float
-     3 - Ajustando a Coluna Ocupacao para os cliente PJ (substituindo pelos dados da coluna cnae_secao - Atividade principal)    
+     3 - Ajustando a Coluna Ocupacao para os cliente PJ (substituindo pelos dados da coluna cnae_secao - Atividade principal)
+     4 - Usando random pra atribuir um número entre 1 e 15 para número de operações (quando são uma string <=15)    
+     5 - Ajusta o tipo de dados de string (object) para inteiro na coluna numero de operacoes
      """
      df['data_base'] = pd.to_datetime(df['data_base']) 
-     df['carteira_inadimplida_arrastada'].astype(float, copy=False)
+     df['carteira_inadimplida_arrastada']=df['carteira_inadimplida_arrastada'].astype(float, copy=False)
      df.loc[df['cliente']=='PJ', 'ocupacao']= df['cnae_secao']
-     df.
+     df.loc[df['numero_de_operacoes'] == '<= 15', 'numero_de_operacoes'] = (df.loc[df['numero_de_operacoes'] == '<= 15', 'numero_de_operacoes'].apply(lambda x: randint(1, 15) if x.strip() == '<= 15' else x))
+     df.loc[:, 'numero_de_operacoes'] = df['numero_de_operacoes'].astype(int)
      return df
 
 def inadimp_uf(df2):
@@ -176,7 +186,7 @@ df1 = df.query(f'cliente=="{tipo}"')
 
 meses=['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto']
 selected_month = st.sidebar.selectbox('Selecione um mês: ', meses)
-st.markdown("""---""")
+
 
      
 match selected_month:
@@ -204,7 +214,7 @@ tab1, tab2= st.tabs(['Goiás', 'Brasil'])
 with tab1: # Goiás
      df3= df2.query('uf=="GO"')
      with st.container():
-          col1, col2, col3, col4, col5 = st.columns(spec=5, gap='medium')
+          col1, col2, col3, col4= st.columns(spec=4, gap='medium')
           with col1:
                #Calculando o indice de inadimplência do estado
                cols=['carteira_ativa','carteira_inadimplida_arrastada']
@@ -219,23 +229,41 @@ with tab1: # Goiás
                col2.metric(label='Valor da Carteira R$', value=(valor_formatado_string))
                #---------------------------------------------------------   
           with col3:
-               #Calculando a quantidade de operações
-               cols=['carteira_ativa', 'carteira_inadimplida_arrastada']
-               avg_carteira=df3['carteira_ativa'].mean()
-               valor_formatado_string = formatar_numero(avg_carteira)
-               col3.metric(label='Endividamento médio por cliente R$', value=valor_formatado_string)
+               #Calculando a média por operação
+               sum_oper=df3['numero_de_operacoes'].sum()
+               sum_carteira = df3['carteira_ativa'].sum()
+               valor_formatado_string = formatar_numero(sum_carteira/sum_oper)
+               col3.metric(label='Média por operação R$', value=valor_formatado_string)
                #------------------------------------------------------------  
-               
           with col4:
-               #Calculando a Inadimplência média por cliente
-               cols=['carteira_ativa', 'carteira_inadimplida_arrastada']
-               avg_cliente=  df3.loc[:, cols].groupby(df3.index()).mean()
-               col4.metric(label='Inadimplência Média', value=valor_formatado_string*100)
+               #Calculando a quantidade de operações
+               sum_oper=df3['numero_de_operacoes'].sum()
+               valor_formatado_string = formatar_numero(sum_oper)
+               col4.metric(label='Total de operações', value=valor_formatado_string)
                #------------------------------------------------------------
-               
-                  
-               
-               
+     with st.container():
+          st.markdown("""---""")  
+          col1, col2, col3= st.columns(spec=3, gap='medium')
+          with col1:
+               #Tabela com 3 colunas contendo Modalidade - Total da Carteira em Milhões - Inadimplência %
+               col1.markdown('Carteira e Inadimplencia por Modalidade')
+               categoria = 'modalidade'
+               df3= inadimp_seg(df2, categoria)
+               df3['inadimplencia %']= (df3['carteira_inadimplida_arrastada']/df3['carteira_ativa'])*100
+               df3=df3.sort_values(by= 'inadimplencia %', ascending=False).set_index('modalidade')
+               col1.dataframe(df3.loc[:,'modalidade','carteira_ativa','inadimplencia %'])
+               #---------------------------------------------------        
+          with col2:
+               #Gráfico de colunas contendo a Inadimplência por porte (selecionar os 10 mais)
+               col2.markdown('Inadimplência por Porte')
+               #col2.plotly_chart(fig)
+               #---------------------------------------------------------   
+          with col3:
+               #Gráfico sunburst contendo a Inadimplência por porte e origem
+               col3.markdown('Inadimplência por porte e origem')
+               #------------------------------------------------------------  
+          
+     
 #------------------------------------------  Estrutura com Containers -----------------------------------------#
 #------------------------------------------  Cartões com Indicadores ------------------------------------------#
      
