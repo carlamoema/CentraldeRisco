@@ -8,6 +8,7 @@ import pandas as pd
 import glob as gl
 import datetime as dt 
 import plotly.express as px
+import plotly.graph_objects as go
 import matplotlib as mat
 from random import randint
 from PIL import Image
@@ -311,6 +312,20 @@ with tab1: # Goiás
                          height=800
                          )
           st.plotly_chart(fig, use_container_width=True)
+          
+     with st.container():
+          ## Gráfico de Colunas contendo 5 maiores tomadores (ticket médio) e o desvio padrão por ocupação
+          #def time_bar_city(df1):
+          cols = ['ocupacao', 'carteira_ativa']
+          df_aux=df4.loc[:,cols ].groupby('ocupacao').agg({'carteira_ativa': ['mean', 'std']})
+          df_aux.columns = ['Media', 'Desvio_padrao']
+          df_aux = df_aux.reset_index()
+          fig = go.Figure()
+          fig.add_trace(go.Bar(name='Control', x=df_aux['ocupacao'], y=df_aux['media'], error_y=dict(type='data', array=df_aux['Desvio_padrao'])))
+          st.plotly_chart(fig, use_container_width=True)
+          #return fig
+          
+          
           
 #------------------------------------------------------------ -------------------------------------------------# 
 #------------------------------------------  Estrutura com Containers -----------------------------------------#
