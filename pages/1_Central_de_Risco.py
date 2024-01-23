@@ -12,7 +12,7 @@ import matplotlib as mat
 from random import randint
 from PIL import Image
 
-st.set_page_config(page_title='Home', page_icon='📈', layout='wide')
+st.set_page_config(page_title='Home', page_icon='💸', layout='wide')
 
 #----------------------------------------------------Funções --------------------------------------------------------------------------#
 def read_code(pathfile):
