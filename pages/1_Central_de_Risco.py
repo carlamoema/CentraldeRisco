@@ -317,11 +317,11 @@ with tab1: # Goiás
           ## Gráfico de Colunas contendo 5 maiores tomadores (ticket médio) e o desvio padrão por ocupação
           #def time_bar_city(df1):
           cols = ['ocupacao', 'carteira_ativa']
-          df_aux=df4.loc[:,cols ].groupby('ocupacao').agg({'carteira_ativa': ['mean', 'std']})
+          df_aux=df4.loc[:,cols ].groupby('ocupacao').agg({'carteira_ativa': ['mean', 'std']}).sort_values('mean', ascending=False)
           df_aux.columns = ['Media', 'Desvio_padrao']
-          df_aux1 = df_aux.sort_values('mean', ascending=False).head(5).reset_index()
+          df_aux = df_aux.head(5).reset_index()
           fig = go.Figure()
-          fig.add_trace(go.Bar(name='Control', x=df_aux1['ocupacao'], y=df_aux1['Media'], error_y=dict(type='data', array=df_aux1['Desvio_padrao'])))
+          fig.add_trace(go.Bar(name='Control', x=df_aux['ocupacao'], y=df_aux['Media'], error_y=dict(type='data', array=df_aux['Desvio_padrao'])))
           st.plotly_chart(fig, use_container_width=True)
           #return fig
           
