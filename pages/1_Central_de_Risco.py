@@ -319,9 +319,9 @@ with tab1: # Goiás
           cols = ['ocupacao', 'carteira_ativa']
           df_aux=df4.loc[:,cols ].groupby('ocupacao').agg({'carteira_ativa': ['mean', 'std']})
           df_aux.columns = ['Media', 'Desvio_padrao']
-          df_aux=df_aux.sort_values('Media', ascending=False)
+          df_aux1=df_aux.loc[:,['ocupacao', 'Media', 'Desvio_padrao']].sort_values('Media', ascending=False)
           fig = go.Figure()
-          fig.add_trace(go.Bar(name='Control', x=df_aux['ocupacao'].head(5), y=df_aux['Media'].head(5), error_y=dict(type='data', array=df_aux['Desvio_padrao'].head(5))))
+          fig.add_trace(go.Bar(name='Control', x=df_aux['ocupacao'], y=df_aux['Media'], error_y=dict(type='data', array=df_aux['Desvio_padrao'])))
           st.plotly_chart(fig, use_container_width=True)
           #return fig
           
