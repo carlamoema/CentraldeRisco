@@ -321,7 +321,7 @@ with tab1: # Goiás
           df_aux.columns = ['Media', 'Desvio_padrao']
           df_aux=df_aux.sort_values('Media', ascending=False)
           fig = go.Figure()
-          fig.add_trace(go.Bar(name='Control', x=df_aux['ocupacao'], y=df_aux['Media'].head(5), error_y=dict(type='data', array=df_aux['Desvio_padrao'].head(5))))
+          fig.add_trace(go.Bar(name='Control', x=df_aux['ocupacao'].head(5), y=df_aux['Media'].head(5), error_y=dict(type='data', array=df_aux['Desvio_padrao'].head(5))))
           st.plotly_chart(fig, use_container_width=True)
           #return fig
           
