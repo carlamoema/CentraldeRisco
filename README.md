@@ -20,7 +20,8 @@ Premissa 2 - São registrados no SCR:
 Premissa 3 - A empresa é um agente financeiro de crédito.
 
 ## 3. Estratégia da solução
-Foi criado um Painel com a demonstração gráfica das segmentações dos dados.
+Foi criado um Painel com a demonstração gráfica das segmentações dos dados. Devido à limitação de memória do repositório Git Hub foi extraída uma amostra de 5% o que corresponde a 224 mil linhas da base original (4.502.500 linhas), alterando os resultados quando comparados ao real. 
+A amostra foi gerada usando a função sample da Biblioteca Pandas.
 Os dados utilizados na solução possuem 4 meses (Janeiro, Fevereiro, Março, Abril e Maio de 2023) de informações disponibilizados na Central de Dados abertos do Banco Central do Brasil e correspondem a toda a carteira de crédito do SFN (foi utilizada a biblioteca pandas com a função sample para gerar uma amostra a partir dos dados e permitir a hospedagem no GitHub).
 As informações são enviadas mensalmente pelos agentes financeiros registrados.  No conjunto foram separadas as visões do Cliente Pessoa Física e Cliente Pessoa Jurídica pois cada um tem suas especificidades. Ambos segmentados em Categorias (ou Dimensões) como uma visão do mês escolhido além de analisados ao longo do período disponível:
 #### 1 - Indicadores % por Estado (UF) de Maior, Menor Inadimplência e a Média Nacional
