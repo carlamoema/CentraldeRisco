@@ -324,6 +324,9 @@ with tab1: # Goiás
           
           st.dataframe(df_aux)
           
+          df_aux['Ticket_medio'] = (df_aux['Total_carteira']/df_aux['Total_operacoes']).round(2)
+          st.dataframe(df_aux)
+          
           
           """
           cols = ['ocupacao', 'carteira_ativa', 'numero_de_operacoes']
