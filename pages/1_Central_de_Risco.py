@@ -322,7 +322,7 @@ with tab1: # Goiás
                                                            'cliente': ['count'],
                                                            'carteira_ativa': ['mean']
                                                             }).reset_index()
-          df_aux.columns= ['Ocupacao', 'Total_carteira', 'Total_operacoes', 'Total_clientes']
+          df_aux.columns= ['Ocupacao', 'Total_carteira', 'Total_operacoes', 'Total_clientes', 'Carteira_media']
           
           st.dataframe(df_aux)
           
