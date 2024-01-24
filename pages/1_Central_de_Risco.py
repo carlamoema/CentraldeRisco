@@ -318,8 +318,7 @@ with tab1: # Goiás
           #def time_bar_city(df1):
           cols = ['ocupacao', 'carteira_ativa']
           df_aux=df4.loc[:,cols ].groupby('ocupacao').agg({'carteira_ativa': ['mean', 'std']})
-          df_aux.columns = ['Media', 'Desvio_padrao']
-          df_aux1=df_aux.loc[:,['ocupacao', 'Media', 'Desvio_padrao']].sort_values('Media', ascending=False)
+          df_aux.columns = ['ocupacao','Media', 'Desvio_padrao']
           fig = go.Figure()
           fig.add_trace(go.Bar(name='Control', x=df_aux['ocupacao'], y=df_aux['Media'], error_y=dict(type='data', array=df_aux['Desvio_padrao'])))
           st.plotly_chart(fig, use_container_width=True)
