@@ -315,7 +315,8 @@ with tab1: # Goiás
           
      with st.container():
           ## Gráfico de Colunas contendo 5 maiores tomadores (ticket médio) e o desvio padrão por ocupação
-          cols = ['ocupacao', 'carteira_ativa']
+          '''
+          cols = ['ocupacao', 'carteira_ativa', 'numero_de_operacoes']
           df_aux=df4.loc[:,cols ].groupby('ocupacao').agg({'carteira_ativa': ['mean', 'std']}).reset_index()
           df_aux.columns = ['Ocupacao','Media', 'Desvio_padrao']
           df_aux['Media']=df_aux['Media'].round(2)
@@ -329,7 +330,23 @@ with tab1: # Goiás
                                error_y=dict(type='data', array=df_top5['Desvio_padrao'])))
           st.dataframe(df_top5)
           st.plotly_chart(fig, use_container_width=True)
-          
+          '''
+          cols = ['ocupacao', 'carteira_ativa', 'numero_de_operacoes']
+          df_aux=df4.loc[:,cols ].groupby('ocupacao').agg({'carteira_ativa': ['sum'], 'numero_de_operacoes': ['sum']}).reset_index()
+          df_aux.columns = ['Ocupacao','Soma_carteira', 'Soma_operacoes']
+          df_aux['Media_operacoes']= df_aux['Soma_carteira']/df_aux['Soma_operacoes']
+          df_aux['Desvio_padrao']=df4.groupby('ocupacao')['carteira_ativa',]
+          df_aux['Media']=df_aux['Media'].round(2)
+          df_aux['Desvio_padrao']=df_aux['Desvio_padrao'].round(2)
+          df_aux.sort_values('Media', ascending=False, inplace=True)
+          df_top5 = df_aux.head(5)
+          fig = go.Figure()
+          fig.add_trace(go.Bar(name='Control', 
+                               x=df_top5['Ocupacao'], 
+                               y=df_top5['Media'], 
+                               error_y=dict(type='data', array=df_top5['Desvio_padrao'])))
+          st.dataframe(df_top5)
+          st.plotly_chart(fig, use_container_width=True)
           
 #------------------------------------------------------------ -------------------------------------------------# 
 #------------------------------------------  Estrutura com Containers -----------------------------------------#
