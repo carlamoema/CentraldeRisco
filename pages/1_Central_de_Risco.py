@@ -337,7 +337,7 @@ with tab1: # Goiás
           
           df_aux['Media_por_operacao']=df_aux['Soma_carteira']/df_aux['Soma_operacoes']
           df_aux['Media_por_operacao']=df_aux['Media_por_operacao'].round(2)
-          df_aux['Desvio_padrao']=df4.groupby('ocupacao')['carteira_ativa'].std().round(2)
+          df_aux['Desvio_padrao'] = df4.groupby('ocupacao')['carteira_ativa'].std().groupby(df4['ocupacao']).mean().round(2)
           
           df_aux.sort_values('Media_por_operacao', ascending=False, inplace=True)
           df_top5 = df_aux.head(5)
