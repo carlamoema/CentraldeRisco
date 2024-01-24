@@ -331,6 +331,8 @@ with tab1: # Goiás
           st.dataframe(df_top5)
           st.plotly_chart(fig, use_container_width=True)
           '''
+          
+          '''
           cols = ['ocupacao', 'carteira_ativa', 'numero_de_operacoes']
           df_aux=df4.loc[:,cols ].groupby('ocupacao').agg({'carteira_ativa': ['mean', 'std']}).reset_index()
           df_aux.columns = ['Ocupacao','Soma_carteira', 'Soma_operacoes']
@@ -348,7 +350,13 @@ with tab1: # Goiás
                                error_y=dict(type='data', array=df_top5['Desvio_padrao'])))
           st.dataframe(df_top5)
           st.plotly_chart(fig, use_container_width=True)
+          '''
+          cols = ['ocupacao', 'carteira_ativa', 'numero_operacoes']
+          df_aux= df4.loc[:,cols]
+          st.dataframe(df_aux)
+               
           
+
 #------------------------------------------------------------ -------------------------------------------------# 
 #------------------------------------------  Estrutura com Containers -----------------------------------------#
 #------------------------------------------  Cartões com Indicadores ------------------------------------------#
