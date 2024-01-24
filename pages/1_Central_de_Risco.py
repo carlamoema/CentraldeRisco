@@ -319,14 +319,15 @@ with tab1: # Goiás
           df_aux=df4.loc[:,cols ].groupby('ocupacao').agg({
                                                            'carteira_ativa': ['sum'],
                                                            'numero_de_operacoes': ['sum'],
-                                                           'cliente': ['count']
+                                                           'cliente': ['count'],
+                                                           'carteira_ativa': ['mean']
                                                             }).reset_index()
           df_aux.columns= ['Ocupacao', 'Total_carteira', 'Total_operacoes', 'Total_clientes']
           
           st.dataframe(df_aux)
           
           df_aux['Ticket_medio_operacao'] = (df_aux['Total_carteira']/df_aux['Total_operacoes'])
-          df_aux['Ticket_medio_cliente'] = df_aux['Total_carteira'].mean()
+     
           st.dataframe(df_aux)
           
           
