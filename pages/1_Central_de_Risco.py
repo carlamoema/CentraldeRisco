@@ -320,7 +320,7 @@ with tab1: # Goiás
                                                            'carteira_ativa': ['sum'],
                                                            'numero_de_operacoes': ['sum']
                                                             })
-          df_aux.columns= df_aux['Ocupacao', 'Total_carteira', 'Total_operacoes']
+          df_aux.columns= ['Ocupacao', 'Total_carteira', 'Total_operacoes']
           
           st.dataframe(df_aux)
           
