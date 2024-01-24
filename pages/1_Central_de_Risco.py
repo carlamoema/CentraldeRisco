@@ -327,7 +327,6 @@ with tab1: # Goiás
                                x=df_top5['Ocupacao'], 
                                y=df_top5['Media'], 
                                error_y=dict(type='data', array=df_top5['Desvio_padrao'])))
-          fig.update_layout(yaxis=dict(tickformat=".2f"))
           st.plotly_chart(fig, use_container_width=True)
           
           
