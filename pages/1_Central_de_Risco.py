@@ -344,7 +344,7 @@ with tab1: # Goiás
           fig = go.Figure()
           fig.add_trace(go.Bar(name='Control', 
                                x=df_top5['Ocupacao'], 
-                               y=df_top5['Media'], 
+                               y=df_top5['Media_por_operacao'], 
                                error_y=dict(type='data', array=df_top5['Desvio_padrao'])))
           st.dataframe(df_top5)
           st.plotly_chart(fig, use_container_width=True)
