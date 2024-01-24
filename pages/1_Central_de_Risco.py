@@ -322,7 +322,7 @@ with tab1: # Goiás
                                         'cliente': ['count']
                                         }).reset_index() 
           df_aux.columns= ['Ocupacao', 'Total_carteira', 'Carteira_media_cliente', 'Desvio_padrao', 'Media_Moda' 'Total_operacoes', 'Total_clientes' ]
-          df_aux['Ticket_medio_operacao'] = (df_aux['Total_carteira']/df_aux['Total_operacoes'])
+          df_aux['Ticket_medio_operacao'] = (df_aux['Total_carteira']/df_aux['Total_operacoes']).round(2)
           st.dataframe(df_aux)
           
           
