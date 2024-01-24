@@ -315,12 +315,13 @@ with tab1: # Goiás
           
      with st.container():
           ## Gráfico de Colunas contendo 5 maiores tomadores (ticket médio) e o desvio padrão por ocupação
-          cols = ['ocupacao', 'carteira_ativa', 'numero_de_operacoes']
+          cols = ['ocupacao', 'carteira_ativa', 'numero_de_operacoes', 'cliente']
           df_aux=df4.loc[:,cols ].groupby('ocupacao').agg({
                                                            'carteira_ativa': ['sum'],
-                                                           'numero_de_operacoes': ['sum']
+                                                           'numero_de_operacoes': ['sum'],
+                                                           'cliente': ['count']
                                                             }).reset_index()
-          df_aux.columns= ['Ocupacao', 'Total_carteira', 'Total_operacoes']
+          df_aux.columns= ['Ocupacao', 'Total_carteira', 'Total_operacoes', 'Total_clientes']
           
           st.dataframe(df_aux)
           
