@@ -318,9 +318,9 @@ with tab1: # Goiás
           cols = ['ocupacao', 'carteira_ativa']
           df_aux=df4.loc[:,cols ].groupby('ocupacao').agg({'carteira_ativa': ['mean', 'std']}).reset_index()
           df_aux.columns = ['Ocupacao','Media', 'Desvio_padrao']
-          df_aux.sort_values('Media', ascending=False, inplace=True)
           df_aux['Media']=df_aux['Media'].apply(formatar_numero)
           df_aux['Desvio_padrao']=df_aux['Desvio_padrao'].apply(formatar_numero)
+          df_aux.sort_values('Media', ascending=False, inplace=True)
           df_top5 = df_aux.head(5)
           fig = go.Figure()
           fig.add_trace(go.Bar(name='Control', 
