@@ -352,7 +352,7 @@ with tab1: # Goiás
           st.plotly_chart(fig, use_container_width=True)
           '''
           cols = ['ocupacao', 'carteira_ativa', 'numero_operacoes']
-          df_aux= df4.loc[:,cols]
+          df_aux= df4[cols]
           st.dataframe(df_aux)
                
           
