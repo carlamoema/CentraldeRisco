@@ -319,7 +319,7 @@ with tab1: # Goiás
           df_aux=df4.loc[:,cols ].groupby('ocupacao').agg({
                                                            'carteira_ativa': ['sum'],
                                                            'numero_de_operacoes': ['sum']
-                                                            })
+                                                            }).reset_index()
           df_aux.columns= ['Ocupacao', 'Total_carteira', 'Total_operacoes']
           
           st.dataframe(df_aux)
