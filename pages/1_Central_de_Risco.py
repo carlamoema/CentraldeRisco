@@ -337,6 +337,7 @@ with tab1: # Goiás
           marker_color='blue',  # Use marker_color para definir a cor das barras
           hoverinfo='y+text'
           ))
+          st.plotly_chart(fig, use_container_width=True)
 
 #------------------------------------------------------------ -------------------------------------------------# 
 #------------------------------------------  Estrutura com Containers -----------------------------------------#
