@@ -363,7 +363,7 @@ with tab1: # Goiás
           top5=df_aux.head(5)
           st.dataframe(top5, use_container_width=True) 
           fig = px.sunburst(top5, path = ['porte', 'ocupacao'], 
-                                   values='carteira_ativa', 
+                                   values='Inadimplencia%', 
                                    color='ativo_problematico', 
                                    color_continuous_scale='RdBu',
                                    color_continuous_midpoint=np.average(top5['ativo_problematico']))      
