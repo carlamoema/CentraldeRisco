@@ -362,7 +362,7 @@ with tab1: # Goiás
           df_aux.sort_values('Inadimplencia%', ascending=False, inplace=True)
           top5=df_aux.head(5)
           st.dataframe(top5, use_container_width=True) 
-          fig = px.sunburst(top5, path = ['modalidade', 'ocupacao'], 
+          fig = px.sunburst(top5, path = ['ocupacao','modalidade'], 
                                    values='Inadimplencia%', 
                                    color='ativo_problematico', 
                                    color_continuous_scale='RdBu',
