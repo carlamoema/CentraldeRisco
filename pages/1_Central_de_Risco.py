@@ -324,7 +324,8 @@ with tab1: # Goiás
           df_aux.columns= ['Ocupacao', 'Total_carteira', 'Carteira_media_cliente', 'Desvio_padrao', 'Total_operacoes', 'Total_clientes' ]
           df_aux['Ticket_medio_operacao'] = df_aux['Total_carteira']/df_aux['Total_operacoes']
           st.dataframe(df_aux)
-          
+          fig = go.Figure()
+          fig.add_trace(go.Bar(name='Control', x=df_aux['Ocupacao'], y=df_aux['Carteira_media_cliente'], error_y=dict(type='data', array=df_aux['Desvio_padrao'])))
           
 
 #------------------------------------------------------------ -------------------------------------------------# 
