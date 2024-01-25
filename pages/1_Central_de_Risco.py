@@ -338,7 +338,7 @@ with tab1: # Goiás
           st.markdown('###### Carteira Média por ocupação com Desvio Padrão')
           st.plotly_chart(fig, use_container_width=True)
           ## Tabela contendo totais gerais por ocupação
-          df_aux=df_aux.reset_index(drop=True).apply(formatar_numero)
+          df_aux['Total_carteira', 'Carteira_media_cliente', 'Desvio_padrao', 'Total_operacoes', 'Total_clientes' ]=df_aux['Total_carteira', 'Carteira_media_cliente', 'Desvio_padrao', 'Total_operacoes', 'Total_clientes'].apply(formatar_numero)
           st.dataframe(df_aux, use_container_width=True)
 
 #------------------------------------------------------------ -------------------------------------------------# 
