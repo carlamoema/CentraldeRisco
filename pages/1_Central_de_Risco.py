@@ -11,6 +11,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import matplotlib as mat
 from random import randint
+import numpy as np
 from PIL import Image
 
 st.set_page_config(page_title='Home', page_icon='💸', layout='wide')
@@ -346,8 +347,27 @@ with tab1: # Goiás
                                              'selector': 'th',
                                              'props': [('text-align', 'center')]
                                              }])
-
-          st.dataframe(df_aux, use_container_width=True)                                                                                      
+          st.dataframe(df_aux, use_container_width=True) 
+          
+     with st.container():            
+          ## Gráfico Sunburst
+          df_aux = (df4.loc[:,['carteira_ativa','porte', 'ocupacao', 'ativo_problematico']]
+                              .groupby(['porte', 'ocupacao'])
+                              .agg( {
+                                     'carteira_ativa': ['sum'],
+                                     'ativo_problematico': ['sum']
+                                      })).reset_index()
+          df_aux['Inadimplencia%']=(df_aux['ativo_problematico']/df_aux['carteira_ativa'])*100
+          #df_aux.columns = ['avg_time', 'std_time']
+          df_aux.sort_values('Inadimplencia%', ascending=False, inplace=True)
+          #df_aux = df_aux.reset_index()
+          fig = px.sunburst(df_aux, path = ['porte', 'ocupacao'], 
+                                   values='carteira_ativa', 
+                                   color='ativo_problematico', 
+                                   color_continuous_scale='RdBu',
+                                   color_continuous_midpoint=np.average(df_aux['ativo_problematico']))      
+          st.plotly_chart(fig, use_container_width=True)       
+          
 #------------------------------------------------------------ -------------------------------------------------# 
 #------------------------------------------  Estrutura com Containers -----------------------------------------#
 #------------------------------------------  Cartões com Indicadores ------------------------------------------#
