@@ -349,26 +349,7 @@ with tab1: # Goiás
                                              }])
           st.dataframe(df_aux, use_container_width=True) 
           
-     with st.container():            
-          ## Gráfico Sunburst
-          df_aux = (df4.loc[:,['modalidade', 'ocupacao','carteira_ativa','ativo_problematico']]
-                              .groupby(['modalidade', 'ocupacao'])
-                              .agg( {
-                                     'carteira_ativa': ['sum'],
-                                     'ativo_problematico': ['sum']
-                                      })).reset_index()
-          df_aux.columns= ['modalidade', 'ocupacao','carteira_ativa','ativo_problematico']
-          df_aux['Inadimplencia%']=(df_aux['ativo_problematico']/df_aux['carteira_ativa'])*100
-          df_aux.sort_values('Inadimplencia%', ascending=False, inplace=True)
-          top5=df_aux.head(5)
-          st.dataframe(top5, use_container_width=True) 
-          fig = px.sunburst(top5, path = ['ocupacao','modalidade'], 
-                                   values='Inadimplencia%', 
-                                   color='ativo_problematico', 
-                                   color_continuous_scale='RdBu',
-                                   color_continuous_midpoint=np.average(top5['ativo_problematico']))      
-          st.plotly_chart(fig, use_container_width=True)       
-          
+
 #------------------------------------------------------------ -------------------------------------------------# 
 #------------------------------------------  Estrutura com Containers -----------------------------------------#
 #------------------------------------------  Cartões com Indicadores ------------------------------------------#
