@@ -331,8 +331,7 @@ with tab1: # Goiás
           x=top_5['Ocupacao'], 
           y=top_5['Carteira_media_cliente'],
           error_y=dict(array=top_5['Desvio_padrao'], type='data'),
-          textposition='outside',
-          marker_color='blue',  # Use marker_color para definir a cor das barras
+          textposition='outside'
           hoverinfo='y+text'
           ))
           st.markdown('###### Carteira Média por ocupação com Desvio Padrão')
@@ -342,10 +341,13 @@ with tab1: # Goiás
           df_aux['Carteira_media_cliente']=df_aux['Carteira_media_cliente'].apply(formatar_numero)
           df_aux['Desvio_padrao']=df_aux['Desvio_padrao'].apply(formatar_numero)
           df_aux['Ticket_medio_operacao']=df_aux['Ticket_medio_operacao'].apply(formatar_numero)
-          st.dataframe(df_aux.style.set_properties(**{'text-align': 'center'}).set_table_styles([{
-                                                       'selector': 'th',
-                                                       'props': [('text-align', 'center')]
-                                                       }]), use_container_width=True)                                                                                      
+          df_aux.reset_index(drop=True, inplace=True)
+          df_aux=df_aux.style.set_table_styles([{
+                                             'selector': 'th',
+                                             'props': [('text-align', 'center')]
+                                             }])
+
+          st.dataframe(df_aux, use_container_width=True)                                                                                      
 #------------------------------------------------------------ -------------------------------------------------# 
 #------------------------------------------  Estrutura com Containers -----------------------------------------#
 #------------------------------------------  Cartões com Indicadores ------------------------------------------#
