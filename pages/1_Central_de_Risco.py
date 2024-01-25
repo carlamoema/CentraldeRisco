@@ -327,7 +327,7 @@ with tab1: # Goiás
           st.dataframe(df_aux)
           fig = go.Figure()
           fig.add_trace(go.Bar(
-          name='Control', 
+          name='Control',
           x=df_aux['Ocupacao'], 
           y=df_aux['Carteira_media_cliente'],
           error_y=dict(array=df_aux['Desvio_padrao'], type='data'),
@@ -335,6 +335,7 @@ with tab1: # Goiás
           marker_color='blue',  # Use marker_color para definir a cor das barras
           hoverinfo='y+text'
           ))
+          st.markdown('##### Carteira Média por ocupação com Desvio Padrão')
           st.plotly_chart(fig, use_container_width=True)
 
 #------------------------------------------------------------ -------------------------------------------------# 
