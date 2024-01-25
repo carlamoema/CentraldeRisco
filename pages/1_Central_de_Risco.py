@@ -331,7 +331,7 @@ with tab1: # Goiás
           x=top_5['Ocupacao'], 
           y=top_5['Carteira_media_cliente'],
           error_y=dict(array=top_5['Desvio_padrao'], type='data'),
-          textposition='outside'
+          textposition='outside',
           hoverinfo='y+text'
           ))
           st.markdown('###### Carteira Média por ocupação com Desvio Padrão')
