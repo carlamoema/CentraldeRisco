@@ -320,7 +320,7 @@ with tab1: # Goiás
                                         'carteira_ativa': ['sum', 'mean', 'std'],
                                         'numero_de_operacoes': ['sum'],
                                         'cliente': ['count']
-                                        }).reset_index() 
+                                        }).reset_index(drop=True) 
           df_aux.columns= ['Ocupacao', 'Total_carteira', 'Carteira_media_cliente', 'Desvio_padrao', 'Total_operacoes', 'Total_clientes' ]
           df_aux['Ticket_medio_operacao'] = df_aux['Total_carteira']/df_aux['Total_operacoes']
           df_aux.sort_values('Carteira_media_cliente', ascending=False, inplace=True)
@@ -337,7 +337,9 @@ with tab1: # Goiás
           ))
           st.markdown('###### Carteira Média por ocupação com Desvio Padrão')
           st.plotly_chart(fig, use_container_width=True)
-          st.dataframe(df_aux)
+          ## Tabela contendo totais gerais por ocupação
+          df_aux=df_aux.apply(formatar_numero)
+          st.dataframe(df_aux, use_container_width=True)
 
 #------------------------------------------------------------ -------------------------------------------------# 
 #------------------------------------------  Estrutura com Containers -----------------------------------------#
