@@ -360,12 +360,13 @@ with tab1: # Goiás
           df_aux['Inadimplencia%']=(df_aux['ativo_problematico']/df_aux['carteira_ativa'])*100
           #df_aux.columns = ['avg_time', 'std_time']
           df_aux.sort_values('Inadimplencia%', ascending=False, inplace=True)
+          top5=df_aux.head(5)
           #df_aux = df_aux.reset_index()
-          fig = px.sunburst(df_aux, path = ['porte', 'ocupacao'], 
+          fig = px.sunburst(top5, path = ['porte', 'ocupacao'], 
                                    values='carteira_ativa', 
                                    color='ativo_problematico', 
                                    color_continuous_scale='RdBu',
-                                   color_continuous_midpoint=np.average(df_aux['ativo_problematico']))      
+                                   color_continuous_midpoint=np.average(top5['ativo_problematico']))      
           st.plotly_chart(fig, use_container_width=True)       
           
 #------------------------------------------------------------ -------------------------------------------------# 
