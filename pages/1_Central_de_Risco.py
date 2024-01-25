@@ -323,7 +323,7 @@ with tab1: # Goiás
                                         }).reset_index() 
           df_aux.columns= ['Ocupacao', 'Total_carteira', 'Carteira_media_cliente', 'Desvio_padrao', 'Total_operacoes', 'Total_clientes' ]
           df_aux['Ticket_medio_operacao'] = df_aux['Total_carteira']/df_aux['Total_operacoes']
-          df_aux.sort_values('carteira_ativa', ascending=False, inplace=True)
+          df_aux.sort_values('Total_carteira', ascending=False, inplace=True)
           top_5=df_aux.head(5)
           fig = go.Figure()
           fig.add_trace(go.Bar(
