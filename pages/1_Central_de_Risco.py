@@ -361,6 +361,7 @@ with tab1: # Goiás
           #df_aux.columns = ['avg_time', 'std_time']
           df_aux.sort_values('Inadimplencia%', ascending=False, inplace=True)
           top5=df_aux.head(5)
+          st.dataframe(top5, use_container_width=True) 
           #df_aux = df_aux.reset_index()
           fig = px.sunburst(top5, path = ['porte', 'ocupacao'], 
                                    values='carteira_ativa', 
