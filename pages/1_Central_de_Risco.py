@@ -325,19 +325,18 @@ with tab1: # Goiás
           df_aux['Ticket_medio_operacao'] = df_aux['Total_carteira']/df_aux['Total_operacoes']
           df_aux.sort_values('Carteira_media_cliente', ascending=False, inplace=True)
           st.dataframe(df_aux)
+       
           fig = go.Figure()
-          fig.add_trace(go.Bar(name='Control', 
-                               x=df_aux['Ocupacao'], 
-                               y=df_aux['Carteira_media_cliente'], 
-                               error_y=dict(type='data', 
-                                            array=df_aux['Desvio_padrao']),
-                               text=df_aux['Desvio_padrao'],
-                               textposition='outside',
-                               marker=dict(color='blue'),
-                               hoverinfo='y+text',
-                               title='Carteira Média e Desvio padrão por Ocupação'))
-          st.plotly_chart(fig, use_container_width=True)
-          
+          fig.add_trace(go.Bar(
+          name='Control', 
+          x=df_aux['Ocupacao'], 
+          y=df_aux['Carteira_media_cliente'],
+          error_y=dict(array=df_aux['Desvio_padrao'], type='data'),
+          text=df_aux['Desvio_padrao'],
+          textposition='outside',
+          marker_color='blue',  # Use marker_color para definir a cor das barras
+          hoverinfo='y+text'
+          ))
 
 #------------------------------------------------------------ -------------------------------------------------# 
 #------------------------------------------  Estrutura com Containers -----------------------------------------#
