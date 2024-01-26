@@ -17,7 +17,7 @@ from PIL import Image
 st.set_page_config(page_title='Home', page_icon='💸', layout='wide')
 
 #----------------------------------------------------Funções --------------------------------------------------------------------------#
-def read_code(pathfile):
+def read_code(caminho_dataset):
      """Esta função recebe como parâmetro o caminho dos arquivos no formato 'dataset/*.csv' lê todos os arquivos.csv 
         da pasta dataset que contém os dados correspondentes a cada database e concatena em um só dataframe.
         1- Cria uma lista com os nomes dos arquivos do dataset (foi mantido um arquivo com a amostra dos meses janeiro a maio de 2023 devido ao limite de armazenamento do GitHub).
@@ -25,7 +25,7 @@ def read_code(pathfile):
         3- Usa uma estrutura de repetição para ler cada arquivo e armazenar na lista dfs, importando apenas as colunas que serão usadas.
         4- Concatena os dataframes em um só, o comando concat precisa receber com parâmetro a lista de dfs
      """
-     arquivos = gl.glob(pathfile, recursive=True)
+     arquivos = gl.glob(caminho_dataset, recursive=True)
      dfs=[]
      for arquivo in arquivos:
           df = pd.read_csv(arquivo, sep=';', 
@@ -156,20 +156,12 @@ def formatar_numero(numero):
 #-------------------------------------------------------------------------------------------------------------#
 
 #-------------------------Lendo o dataset --------------------------------------------------------------------#
-pathfile= './dataset/amostra_2.csv'
-df = pd.read_csv(pathfile, sep=';', 
-                                    encoding='utf-8', 
-                                    thousands='.', 
-                                    decimal=',', 
-                                    usecols=['data_base', 'uf', 
-                                             'carteira_ativa', 'ativo_problematico', 'numero_de_operacoes',
-                                             'carteira_inadimplida_arrastada', 'cliente', 
-                                             'modalidade', 'porte', 'ocupacao', 'cnae_secao'])
 
-df = read_code(pathfile)
+caminho_dataset= './dataset/*.csv'
+
+df = read_code(caminho_dataset)
 #------------------------- Limpando os dados -----------------------------------------------------------------#
 df= clean_code(df)
-
 #------------------------- Alterando os tipos de dados -------------------------------------------------------#
 df= change_code(df)
 
