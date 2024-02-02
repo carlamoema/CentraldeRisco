@@ -195,8 +195,6 @@ df1 = df.query(f'cliente=="{tipo}"')
 
 meses=['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio']
 selected_month = st.sidebar.selectbox('Selecione um mês: ', meses)
-
-
      
 match selected_month:
      case 'Janeiro':
